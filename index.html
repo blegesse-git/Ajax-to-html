@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Favorite Movies</title>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" />
+</head>
+
+<body>
+    <div class="container">
+        <h2>Basic Table</h2>
+        <p>The .table class adds basic styling (light padding and only horizontal dividers) to a table:</p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <!-- The scope attribute specifies that this is a header for a column -->
+                    <th scope="col">Movie Name</th>
+                    <th scope="col">Year</th>
+                    <th scope="col">Actors</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Interstellar</td>
+                    <td>2014</td>
+                    <td>Ellen Burstyn, Matthew McConaughey, Mackenzie Foy, John Lithgow</td>
+                </tr>
+                <!-- Insert additional movie rows here -->
+            </tbody>
+        </table>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        // omdg ajax call
+
+        var searchMovie = function (movie) {
+            var queryURL = "http://www.omdbapi.com/?i=" + movie + "tt3896198&apikey=1d227a3a";
+            $.ajax({
+                method: "GET",
+                url: queryURL
+            }).then(function(response) {
+                makeRow(response)
+            })
+        }
+
+
+        var makeRow = function(response) {
+            // create table row 
+            var trow = $('<tr>');
+            // create td and append its text to be response
+            var titleTD = $("<td>").text(response.Title);
+            var yearTD = $("<td>").text(response.Year);
+            var actorsTD = $("<td>").text(response.Actors);
+
+            //append the td to trow
+            trow.append(titleTD, yearTD, actorsTD);
+            // append row to table body
+            var tbody = $("tbody");
+            tbody.append(trow);
+
+        }
+        searchMovie("the proposal");
+        searchMovie("up");
+        searchMovie("get out");
+    </script>
+</body>
+
+</html>
